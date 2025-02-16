@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Google Keep Clone">
+    <title>Google Keep Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav>
+        <div class="navbar">
+            <div class="logo">
+                <span class="material-symbols-outlined">menu</span>
+                <h2>Google Keep</h2>
+                <span class="material-symbols-outlined">chevron_right</span>
+                <h2>Notes</h2>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search" />
+                <span class="material-symbols-outlined">search</span>
+            </div>
+            <div class="profile">
+                <span class="material-symbols-outlined">refresh</span>
+                <span class="material-symbols-outlined">settings</span>
+                <span class="material-symbols-outlined">account_circle</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">lightbulb</span>
+            <h3>Notes</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">reminder</span>
+            <h3>Reminders</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">archive</span>
+            <h3>Archive</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">delete</span>
+            <h3>Trash</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">notifications</span>
+            <h3>Notifications</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">label</span>
+            <h3>Labels</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">add</span>
+            <h3>Create new label</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">help</span>
+            <h3>Help</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">settings</span>
+            <h3>Settings</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">account_circle</span>
+            <h3>Account</h3>
+        </div>
+        <div class="sidebar-item">
+            <span class="material-symbols-outlined">logout</span>
+            <h3>Logout</h3>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="note-input">
+            <textarea placeholder="Take a note..." rows="2"></textarea>
+            <div class="note-actions">
+                <span class="material-symbols-outlined">add</span>
+                <span class="material-symbols-outlined">image</span>
+            </div>
+        </div>
+
+        <!-- Notes will be displayed here -->
+        <div class="notes-container"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
