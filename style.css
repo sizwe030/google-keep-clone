@@ -1,9 +1,8 @@
 * {
-    margin: 0%;
+    margin: 0;
     box-sizing: border-box;
-    padding: 0%;
+    padding: 0;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -45,7 +44,8 @@ body {
 }
 
 .search-bar input {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     border: none;
     padding: 8px 16px;
     border-radius: 8px;
@@ -54,7 +54,6 @@ body {
     transition: background-color 0.2s;
     outline: none;
 }
-
 
 .search-bar input:focus {
     background-color: white;
@@ -97,14 +96,22 @@ body {
     width: 20%;
     background-color: #f5f4f5;
     transition: 0.3s;
+    position: fixed;
+    height: 100vh;
+    padding-top: 20px;
+    overflow-y: auto;
 }
 
 .sidebar-item {
     padding: 20px;
-    border-bottom: 1px solid #e0e0e0;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+}
+
+.sidebar-item h3 {
+    display: inline-block; 
+    margin-left: 10px; 
 }
 
 .main {
@@ -138,7 +145,6 @@ body {
     border-radius: 10px;
 }
 
-
 .note-actions {
     display: flex;
     justify-content: flex-end;
@@ -147,15 +153,6 @@ body {
 
 .note-actions .material-symbols-outlined {
     margin-left: 15px;
-}
-
-.sidebar {
-    position: fixed;
-    height: 100vh;
-    width: 20%;
-    background-color: #f5f4f5;
-    padding-top: 20px;
-    overflow-y: auto;
 }
 
 .note {
@@ -190,4 +187,9 @@ body {
     margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
+}
+
+h3 {
+    display: inline-block; 
+    margin-left: 10px; 
 }

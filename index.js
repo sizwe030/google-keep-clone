@@ -9,13 +9,61 @@ const navbarIcons = document.querySelectorAll('.navbar .material-symbols-outline
 // Load notes from local storage on page load
 document.addEventListener('DOMContentLoaded', displayNotes);
 
+function setReminder() {
+    const reminderTime = prompt('Set a reminder time (e.g., "2023-10-10T10:00")');
+    if (reminderTime) {
+        const noteText = noteInput.value.trim();
+        if (noteText !== '') {
+            const reminder = {
+                text: noteText,
+                time: new Date(reminderTime).getTime()
+            };
+            localStorage.setItem('reminder', JSON.stringify(reminder));
+            alert(`Reminder set for ${reminderTime}`);
+        }
+    }
+}
+
 // Add event listeners to sidebar items
 sidebarItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const action = item.querySelector('h3').textContent.toLowerCase();
-        handleSidebarAction(action);
+    const h3Text = item.querySelector('h3');
+    h3Text.style.display = 'none'; // Hide h3 text by default
+
+    // Add mouseenter event to show h3 text when mouse hovers over the sidebar item
+    item.addEventListener('mouseenter', () => {
+        h3Text.style.display = 'block';
     });
+
+
+    item.addEventListener('click', () => {
+        const action = h3Text.textContent.toLowerCase();
+        handleSidebarAction(action);
+        
+        // Show the h3 text
+        h3Text.style.display = 'block';
+
+        // Clear previous timeout to hide h3 text
+
+        clearTimeout(timeoutId);
+
+        // Set a timeout to hide the h3 text after 3 seconds of inactivity
+        timeoutId = setTimeout(() => {
+            h3Text.style.display = 'none';
+        }, 3000);
+    });
+
+    // Add mouseleave event to hide h3 text when mouse leaves the sidebar item
+    item.addEventListener('mouseleave', () => {
+        h3Text.style.display = 'none';
+    });
+
+    item.addEventListener('mouseleave', () => {
+        h3Text.style.display = 'none';
+    });
+
 });
+
+let timeoutId;
 
 // Add event listeners to navbar icons
 navbarIcons.forEach(icon => {
@@ -26,16 +74,17 @@ navbarIcons.forEach(icon => {
 });
 
 // Handle sidebar actions
-function handleSidebarAction(action) {
+function handleSidebarAction(action) {    
+
     switch(action) {
         case 'notes':
             displayNotes();
             break;
         case 'reminders':
-            alert('Reminders feature coming soon!');
+            setReminder();
             break;
         case 'archive':
-            alert('Archive feature coming soon!');
+            displayArchivedNotes();
             break;
         case 'trash':
             alert('Trash feature coming soon!');
@@ -94,7 +143,6 @@ function handleNavbarAction(action) {
     }
 }
 
-
 // Add note event listeners
 addBtn.addEventListener('click', addNote);
 noteInput.addEventListener('keypress', (e) => {
@@ -150,6 +198,64 @@ function displayNotes() {
 
         notesContainer.appendChild(noteElement);
     });
+}
+
+// Archive note function
+function archiveNote(noteElement) {
+    const archivedNotes = JSON.parse(localStorage.getItem('archivedNotes')) || [];
+    const noteText = noteElement.querySelector('p').textContent;
+    archivedNotes.push(noteText);
+    localStorage.setItem('archivedNotes', JSON.stringify(archivedNotes));
+    noteElement.remove();
+    saveNotes();
+}
+
+// Display archived notes
+function displayArchivedNotes() {
+    const archivedNotes = JSON.parse(localStorage.getItem('archivedNotes')) || [];
+    notesContainer.innerHTML = ''; // Clear current notes
+    archivedNotes.forEach(noteText => {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'note';
+        noteElement.innerHTML = `
+            <p>${noteText}</p>
+            <span class="material-symbols-outlined restore-btn">restore</span>
+        `;
+        
+        // Add restore functionality
+        const restoreBtn = noteElement.querySelector('.restore-btn');
+        restoreBtn.addEventListener('click', () => {
+            restoreNote(noteText);
+            noteElement.remove();
+        });
+
+        notesContainer.appendChild(noteElement);
+    });
+}
+
+function restoreNote(noteText) {
+    const archivedNotes = JSON.parse(localStorage.getItem('archivedNotes')) || [];
+    const updatedNotes = archivedNotes.filter(note => note !== noteText);
+    localStorage.setItem('archivedNotes', JSON.stringify(updatedNotes));
+    addNoteToDisplay(noteText);
+}
+
+function addNoteToDisplay(noteText) {
+    const noteElement = document.createElement('div');
+    noteElement.className = 'note';
+    noteElement.innerHTML = `
+        <p>${noteText}</p>
+        <span class="material-symbols-outlined delete-btn">delete</span>
+    `;
+    
+    // Add delete functionality
+    const deleteBtn = noteElement.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', () => {
+        noteElement.remove();
+        saveNotes();
+    });
+
+    notesContainer.appendChild(noteElement);
 }
 
 // Save notes to local storage
